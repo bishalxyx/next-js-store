@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import ButtonLoading from "@/components/Application/ButtonLoading"
 import Link from "next/link"
-import { WEBSITE_LOGIN, WEBSITE_REGISTER } from "@/routes/WebsiteRoute"
+import { WEBSITE_LOGIN, WEBSITE_REGISTER, WEBSITE_RESET_PASSWORD } from "@/routes/WebsiteRoute"
 import axios from "axios"
 import { showToast } from "@/lib/showToast"
 import { catchError } from "@/lib/helperFunction"
@@ -96,6 +96,10 @@ const Login = () => {
                 ?
                 <>
                 
+                    <div className="text-center">
+                        <h1 className="text-3xl font-bold">Login Into Account</h1>
+                        <p>Login into account by filling out the form</p>
+                    </div>
                 <div className="mt-5">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(handleLogin)} >
@@ -143,7 +147,7 @@ const Login = () => {
                                     <Link href={WEBSITE_REGISTER} className="text-primary underline">Create Account</Link>
                                 </div>
                                 <div className="mt-3">
-                                    <Link href="" className="text-primary underline">Forgot Password</Link>
+                                    <Link href={WEBSITE_RESET_PASSWORD} className="text-primary underline">Forgot Password</Link>
                                 </div>
                             </div>
 

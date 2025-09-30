@@ -1,3 +1,4 @@
+import { Header } from "@/components/Application/Header";
 import "./globals.css";
 import {Assistant} from 'next/font/google'
 import { ToastContainer} from 'react-toastify';
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${assistantFont.className} antialiased`}
       >
+        {/* <Header/> */}
         <ToastContainer/>
         {children}
       </body>
