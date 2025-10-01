@@ -1,5 +1,6 @@
+import { container } from "@/lib/container.js";
 import { emailVerificationLink } from "@/email/emailVerification";
-import { connectDb } from "@/lib/databaseConnection";
+import { connectDb } from "@/lib/connectDb";
 import { catchError, response } from "@/lib/helperFunction";
 import { sendMail } from "@/lib/sendMail";
 import { zSchema } from "@/lib/zodSchema";

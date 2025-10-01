@@ -1,73 +1,59 @@
+import { connectDb } from "@/lib/connectDb";
+import { response, catchError, generateOTP } from "@/lib/helperFunction";
+import { sendMail } from "@/lib/sendMail";
 import { emailVerificationLink } from "@/email/emailVerification";
 import { otpEmail } from "@/email/otpVerification";
-import { connectDb } from "@/lib/databaseConnection";
-import { catchError, generateOTP, response } from "@/lib/helperFunction";
-import { sendMail } from "@/lib/sendMail";
-import { zSchema } from "@/lib/zodSchema";
-import OTPMODEL from "@/models/otpModel";
 import UserModel from "@/models/userModel";
+import OTPModel from "@/models/otpModel";
 import { SignJWT } from "jose";
+import { createAuthService } from "@/services/authService";
+import { zSchema } from "@/lib/zodSchema";
 import z from "zod";
 
-export async function POST(request){
-    try {
-        await connectDb();
-        const payload=await request.json();
-        const validationSchema=zSchema.pick({
-            email:true
-        }).extend({
-            password:z.string()
-        })
-        const validatedData=validationSchema.safeParse(payload);
-        if(!validatedData.success){
-            return response(false,401,'invalid or missing input field',validatedData.error)
-        }
-        const {email,password}=validatedData.data;
+// Helper to sign JWT
+async function jwtSigner(payload, secretKey) {
+  const secret = new TextEncoder().encode(secretKey);
+  return new SignJWT(payload)
+    .setIssuedAt()
+    .setExpirationTime("1h")
+    .setProtectedHeader({ alg: "HS256" })
+    .sign(secret);
+}
 
-        const getUser=await UserModel.findOne({deletedAt:null,email}).select("+password");
-        // if(!getUser)return response(false,404,'Invalid login credential')
+export async function POST(request) {
+  try {
+    const body = await request.json();
 
-        if(!getUser){
-            return response(false,400,'Invalid credential')
-        }
-         if(!getUser.isEmailVerified){
-           const secret = new TextEncoder().encode(process.env.SECRET_KEY);
-                   const token = await new SignJWT({ userID: getUser._id.toString() })
-                       .setIssuedAt()
-                       .setExpirationTime('1h')
-                       .setProtectedHeader({ alg: 'HS256' })
-                       .sign(secret)
-           
-                   await sendMail('Email Verification request from Sonu kumar', email,
-                        emailVerificationLink(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email/${token}`))
-                        return response(false,401,'Your Email is not verified we have sent a verification link to your registered email address')
-         }
-
-        const isPasswordVerified=await getUser.comparePassword(password);
-        if(!isPasswordVerified){
-            return response(false,400,'Invalid credential')
-        }
-
-    //otp
-    await OTPMODEL.deleteMany({email});
-    const otp=generateOTP();
-    const newOTPData=new OTPMODEL({
-        email,otp
-    })
-    await newOTPData.save();
-
-    const otpEmailStatus=await sendMail('Your Login verification code',email,otpEmail(otp));
-    // console.log(otpEmailStatus);
-
-    if(!otpEmailStatus.success){
-                    return response(false,400,'Failed to send Otp')
-
-                    
+    const schema = zSchema.pick({ email: true }).extend({
+      password: z.string()
+    });
+    const parsed = schema.safeParse(body);
+    if (!parsed.success) {
+      return response(false, 401, "Invalid or missing input field", parsed.error);
     }
-    return response(true,200,'Please verify your device')
 
+    // Build DI Container
+    const authService = createAuthService({
+      db: { connect: connectDb },
+      userModel: UserModel,
+      otpModel: OTPModel,
+      sendMail,
+      emailVerificationLink,
+      otpEmail,
+      jwtSigner,
+      generateOTP
+    });
 
-    } catch (error) {
-        return catchError(error)
-    }
+    // Use the service
+    const result = await authService.login({
+      email: parsed.data.email,
+      password: parsed.data.password,
+      secretKey: process.env.SECRET_KEY,
+      baseUrl: process.env.NEXT_PUBLIC_BASE_URL
+    });
+
+    return response(result.success, result.status, result.message);
+  } catch (err) {
+    return catchError(err);
+  }
 }

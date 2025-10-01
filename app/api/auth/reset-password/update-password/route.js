@@ -1,4 +1,4 @@
-import { connectDb } from "@/lib/databaseConnection";
+import { connectDb } from "@/lib/connectDb";
 import { catchError, response } from "@/lib/helperFunction";
 import { zSchema } from "@/lib/zodSchema";
 import UserModel from "@/models/userModel";

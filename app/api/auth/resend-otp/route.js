@@ -1,5 +1,5 @@
 import { otpEmail } from "@/email/otpVerification";
-import { connectDb } from "@/lib/databaseConnection";
+import { connectDb } from "@/lib/connectDb";
 import { catchError, generateOTP, response } from "@/lib/helperFunction";
 import { sendMail } from "@/lib/sendMail";
 import { zSchema } from "@/lib/zodSchema";

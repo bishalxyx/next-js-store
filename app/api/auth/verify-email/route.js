@@ -1,4 +1,4 @@
-import { connectDb } from "@/lib/databaseConnection";
+import { connectDb } from "@/lib/connectDb";
 import { catchError, response } from "@/lib/helperFunction";
 import UserModel from "@/models/userModel";
 import { jwtVerify } from "jose";

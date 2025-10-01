@@ -27,8 +27,10 @@ import { WEBSITE_LOGIN, WEBSITE_REGISTER, WEBSITE_RESET_PASSWORD } from "@/route
 import axios from "axios"
 import { showToast } from "@/lib/showToast"
 import { catchError } from "@/lib/helperFunction"
+import { useRouter } from "next/navigation"
 
 const Login = () => {
+    const router=useRouter();
     const [loading, setLoading] = useState(false);
     const [otpVerificationLoading, setOtpVerificationLoading] = useState(false);
     const [isTypePassword, setIsTypePassword] = useState(true);
@@ -79,6 +81,7 @@ const Login = () => {
         console.log(value.email);
         form.reset();
         showToast('success', registerResponse.message);
+        router.push('/');
     } catch (error) {
         showToast('error', error.message);
     } finally {
