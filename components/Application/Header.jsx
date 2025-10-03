@@ -1,11 +1,15 @@
 "use client";
 import Link from "next/link";
+import { useSelector } from 'react-redux';
 import LogoutButton from "@/components/Application/LogoutButton";
 import Logo from '@/public/assets/images/logo.png'
 import Image from "next/image";
 import { useState } from "react";
+import { ShoppingCartIcon } from "lucide-react";
 export default function Header({ isLoggedIn }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  // const cartCount=0;
+  const noOfitem=useSelector(state=>state.bag);
   // console.log(isLoggedIn);
   return (
     <header className="bg-[#0B1D39] text-white">
@@ -43,6 +47,14 @@ export default function Header({ isLoggedIn }) {
               </button>
             </Link>
           )}
+          <Link href="/auth/cart" className="relative">
+            <ShoppingCartIcon className="w-7 h-7 text-white hover:text-gray-300 transition" />
+            {noOfitem.length >0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {noOfitem.length}
+              </span>
+            )}
+          </Link>
 
           {/* Mobile menu button */}
           <button

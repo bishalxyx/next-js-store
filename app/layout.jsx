@@ -1,6 +1,8 @@
-
+"use client"
+import movieStore from "@/store/index";
 import "./globals.css";
 import {Assistant} from 'next/font/google'
+import { Provider } from "react-redux";
 import { ToastContainer} from 'react-toastify';
 
 const assistantFont=Assistant({
@@ -16,9 +18,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${assistantFont.className} antialiased bg-slate-500 dark:bg-gray-800 min-h-screen`}
         >
+      <Provider store={movieStore}>
         
         <ToastContainer/>
         {children}
+        </Provider>
       </body>
     </html>
   );

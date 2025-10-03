@@ -5,8 +5,9 @@ import { Home } from '@/components/Application/Home'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-const page = async () => {
-   const token =await cookies().get("access_token")?.value;
+const page = async() => {
+  const cookieStore = await cookies();
+   const token = cookieStore.get("access_token")?.value;
     const isLoggedIn = !!token;
   return (
     <div>

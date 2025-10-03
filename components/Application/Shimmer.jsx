@@ -1,4 +1,5 @@
 // components/Application/ShimmerCard.js
+
 export default function Shimmer() {
   return (
     <div className="max-w-sm w-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4 flex flex-col animate-pulse">

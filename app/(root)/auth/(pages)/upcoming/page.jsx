@@ -5,6 +5,7 @@ import Link from 'next/link';
 import LoadingSpinner from '@/components/Application/LoadingSpinner';
 import React, { useEffect, useState } from 'react';
 import Shimmer from '@/components/Application/Shimmer';
+import ShimmerMoviePage from '@/components/Application/ShimmerMoviePage';
 
 const Upcoming = () => {
   const [movieList, setMovieList] = useState([]);
@@ -29,7 +30,7 @@ const Upcoming = () => {
   useEffect(() => {
     getMovies();
   }, []);
-
+// if (loading) return <ShimmerMoviePage />;
   return (
     <>
       {/* <Header/> */}
