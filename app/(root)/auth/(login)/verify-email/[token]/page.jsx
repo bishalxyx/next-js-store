@@ -48,7 +48,7 @@ const EmailVerification = ({ params }) => {
                 <h1 className='text-2xl font-bold my-5 text-red-500'>Email verification failed</h1>
       
                 <Button asChild>
-                  <Link href={WEBSITE_LOGIN}>Continue Shopping</Link>
+                  <Link href={WEBSITE_HOME}>Continue Shopping</Link>
                 </Button>
 
               </div>
