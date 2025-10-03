@@ -4,6 +4,7 @@ import Header from '@/components/Application/Header'
 import { Home } from '@/components/Application/Home'
 import { Button } from '@/components/ui/button'
 import React from 'react'
+import { Footer } from "@/components/Application/Footer";
 
 const page = async() => {
   const cookieStore = await cookies();
@@ -13,6 +14,7 @@ const page = async() => {
     <div>
      <Header isLoggedIn={isLoggedIn} />
      <Home/>
+     <Footer/>
     </div>
   )
 }

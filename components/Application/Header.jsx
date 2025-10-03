@@ -31,9 +31,9 @@ export default function Header({ isLoggedIn }) {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-8 font-medium">
-          <Link href="/">Home</Link>
-          <Link href="/auth/popular">Popular</Link>
-          <Link href="/auth/upcoming">Upcoming</Link>
+          <Link href="/" className="hover:text-red-600 transition-colors duration-200">Home</Link>
+          <Link href="/auth/popular" className="hover:text-red-600 transition-colors duration-200">Popular</Link>
+          <Link href="/auth/upcoming" className="hover:text-red-600 transition-colors duration-200">Upcoming</Link>
         </nav>
 
         {/* Right side */}

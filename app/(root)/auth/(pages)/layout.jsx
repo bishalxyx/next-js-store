@@ -1,3 +1,4 @@
+import { Footer } from "@/components/Application/Footer";
 import Header from "@/components/Application/Header";
 import { cookies } from "next/headers";
 
@@ -10,6 +11,7 @@ export default async function RootLayout({ children }) {
       <>
         <Header isLoggedIn={isLoggedIn} />
         {children}
+        <Footer/>
       </>
   );
 }
