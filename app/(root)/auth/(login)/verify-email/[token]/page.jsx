@@ -6,7 +6,7 @@ import verifiedImg from '@/public/assets/images/verified.gif'
 import verifiedImg1 from '@/public/assets/images/verification-failed.gif'
 import Image from 'next/image';
 import Link from 'next/link';
-import { WEBSITE_HOME } from '@/routes/WebsiteRoute';
+import { WEBSITE_HOME, WEBSITE_LOGIN } from '@/routes/WebsiteRoute';
 import { Button } from '@/components/ui/button';
 
 
@@ -48,7 +48,7 @@ const EmailVerification = ({ params }) => {
                 <h1 className='text-2xl font-bold my-5 text-red-500'>Email verification failed</h1>
       
                 <Button asChild>
-                  <Link href={WEBSITE_HOME}>Continue Shopping</Link>
+                  <Link href={WEBSITE_LOGIN}>Continue Shopping</Link>
                 </Button>
 
               </div>
