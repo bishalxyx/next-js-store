@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${assistantFont.className} antialiased`}
+        className={`${assistantFont.className} antialiased bg-slate-500 dark:bg-gray-800 min-h-screen`}
         >
         
         <ToastContainer/>

@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react'
 // import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Image from 'next/image';
+import Shimmer from './Shimmer';
 // import { bagActions } from '../store/bagSlice';
 
 
 export const Home = () => {
     const [show, setShow] = useState(false);
+      const [loading, setLoading] = useState(true);
+    
     const [movieList, setmovieList] = useState([]);
     //   const bagitem = useSelector(state => state.bag)
     let elementFound = false;
@@ -22,19 +25,31 @@ export const Home = () => {
     }
     // console.log(bagitem);
 
-    const getmovie = () => {
+    const getmovie = async () => {
+    try {
+      setLoading(true);
         fetch('https://api.themoviedb.org/3/discover/movie?api_key=9c9543032d831fbc338e8a565c16266f')
             .then(response => response.json())
             .then(response => setmovieList(response.results))
             .catch(err => console.error(err));
     }
+    catch (err) {
+      console.error(err);
+    }
+     finally {
+      setLoading(false); 
+    }
+  }
     // console.log(movieList);
     // movieList.map(movie=>console.log(movie.poster_path))
-    useEffect(() => getmovie(), [])
+    useEffect(() => {getmovie();}, [])
     return (
         <div className="bg-slate-500 dark:bg-gray-800 p-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-        {movieList.map((movie) => (
+        {loading ? (
+                  Array.from({ length: 6 }).map((_, i) => <Shimmer key={i} />)
+                ) : (
+        movieList.map((movie) => (
           <div
             key={movie.id}
             className="w-72 flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
@@ -78,7 +93,7 @@ export const Home = () => {
               </div>
             </div>
           </div>
-        ))}
+        )))}
       </div>
     </div>
 

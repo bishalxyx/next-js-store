@@ -2,26 +2,40 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
+import Shimmer from '@/components/Application/Shimmer';
 // import Header from '@/components/Application/Header';
 // import Header from '@/components/Application/Header';
 
 const Popular = () => {
 
   const [movieList,setmovieList]=useState([]);
-  const getmovie=()=>{
+  const [loading, setLoading] = useState(true);
+  const getmovie=async () => {
+    try {
+      setLoading(true);
       fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=9c9543032d831fbc338e8a565c16266f')
 .then(response => response.json())
 .then(response => setmovieList(response.results))
 .catch(err => console.error(err));
   }
+  catch (err) {
+      console.error(err);
+    }
+     finally {
+      setLoading(false); 
+    }
+};
   // console.log(movieList);
   // movieList.map(movie=>console.log(movie.poster_path))
-  useEffect(()=>getmovie(),[])
+  useEffect(()=>{getmovie();},[])
   return (
     <>
       {/* <Header/> */}
       <div className="bg-slate-500 flex flex-wrap justify-center dark:bg-gray-800 p-4">
-        {movieList.map((movie) => (
+        {loading ? (
+                  Array.from({ length: 6 }).map((_, i) => <Shimmer key={i} />)
+                ) :(
+        movieList.map((movie) => (
           <div
             key={movie.id}
             className="max-w-sm w-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4 flex flex-col"
@@ -46,7 +60,7 @@ const Popular = () => {
               </p>
             </div>
           </div>
-        ))}
+        )))}
       </div>
     </>
   )
