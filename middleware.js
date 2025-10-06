@@ -5,14 +5,12 @@ export async function middleware(request) {
   const token = request.cookies.get("access_token")?.value;
   const { pathname } = request.nextUrl;
 
-  // Paths that don't require login
   const publicPaths = [
     "/auth/login",
     "/auth/register",
     "/auth/reset-password",
   ];
 
-  // ✅ Allow verify-email route without token
   const isVerifyEmailPath = pathname.startsWith("/auth/verify-email");
 
   if (publicPaths.includes(pathname) || isVerifyEmailPath) {

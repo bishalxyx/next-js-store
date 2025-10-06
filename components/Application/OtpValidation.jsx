@@ -45,7 +45,7 @@ const [isResendOtp,setIsResendOtp]=useState(false)
     }
     }
     return (
-        <div>
+        <div >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleOtpVerification)} >
                     <div className='text-center'>

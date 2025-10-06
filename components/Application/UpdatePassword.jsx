@@ -86,7 +86,7 @@ const UpdatePassowrd = ({email}) => {
                                         <FormItem>
                                             <FormLabel>Password</FormLabel>
                                             <FormControl>
-                                                <Input type="password" placeholder="*********" {...field} />
+                                                <Input className="bg-white text-black placeholder-gray-500" type="password" placeholder="*********" {...field} />
                                             </FormControl>
 
 
@@ -103,7 +103,7 @@ const UpdatePassowrd = ({email}) => {
                                         <FormItem className="relative">
                                             <FormLabel>Confirm Password</FormLabel>
                                             <FormControl>
-                                                <Input type={isTypePassword ? 'password' : 'text'} placeholder="*********" {...field} />
+                                                <Input className="bg-white text-black placeholder-gray-500" type={isTypePassword ? 'password' : 'text'} placeholder="*********" {...field} />
                                             </FormControl>
                                             <button className="absolute top-1/2 right-2 cursor-pointer" type="button" onClick={() => setIsTypePassword(!isTypePassword)}>
                                                 {isTypePassword ? <FaRegEyeSlash /> : <FaRegEye />}
